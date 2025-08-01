@@ -7,11 +7,14 @@ import numpy as np
 import io
 import os
 
+from flask_cors import CORS  #
+
 # Load model dan label encoder
 model = load_model("model/model_xray.h5")
 labels = ["Atelectasis", "Effusion", "Infiltration", "Mass", "Nodule", "Pneumothorax"]
 
 app = Flask(__name__)
+CORS(app)  # ✅ Aktifkan CORS agar bisa diakses dari frontend lain (misal Netlify)
 
 def preprocess_image(image_bytes):
     image = Image.open(io.BytesIO(image_bytes)).convert("L")  # Grayscale
